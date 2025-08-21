@@ -1,0 +1,57 @@
+import string
+import getpass
+
+def check_password_strength(password):
+    score = 0
+    remarks = []
+
+    # Criteria 1: Length
+    if len(password) >= 8:
+        score += 1
+    else:
+        remarks.append("Password should be at least 8 characters long.")
+
+    # Criteria 2: Uppercase letters
+    if any(char.isupper() for char in password):
+        score += 1
+    else:
+        remarks.append("Password should contain at least one uppercase letter.")
+
+    # Criteria 3: Lowercase letters
+    if any(char.islower() for char in password):
+        score += 1
+    else:
+        remarks.append("Password should contain at least one lowercase letter.")
+
+    # Criteria 4: Digits
+    if any(char.isdigit() for char in password):
+        score += 1
+    else:
+        remarks.append("Password should contain at least one digit.")
+
+    # Criteria 5: Special characters
+    special_chars = string.punctuation
+    if any(char in special_chars for char in password):
+        score += 1
+    else:
+        remarks.append("Password should contain at least one special character.")
+
+    print(f"\nPassword Strength Score: {score}/5")
+
+    if score == 5:
+        print("Remarks: Strong password!")
+    elif score >= 3:
+        print("Remarks: Medium strength. Consider adding more variety.")
+    else:
+        print("Remarks: Weak password. Please improve its strength.")
+        for remark in remarks:
+            print(f"- {remark}")
+
+if __name__ == "__main__":
+    while True:
+        password = getpass.getpass("Enter your password: ")
+        check_password_strength(password)
+        
+        another_check = input("Check another password? (yes/no): ").lower()
+        if another_check != 'yes':
+            break
